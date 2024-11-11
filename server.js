@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config(); 
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -10,7 +10,7 @@ const borrowRoutes = require('./routes/borrowRoutes');
 
 // 创建Express应用
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000; // 使用 Render 的环境变量 PORT 或默认端口 4000
 
 // 设置视图引擎
 app.set('view engine', 'ejs');
@@ -47,5 +47,5 @@ app.use('/api/borrow', borrowRoutes);
 
 // 启动服务器
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
