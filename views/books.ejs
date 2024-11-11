@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library Books</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Library Books</h1>
+
+  <!-- 搜索表单 -->
+  <form action="/api/books/read" method="POST">
+    <label for="search">Search by Title or Author:</label>
+    <input type="text" id="search" name="search" placeholder="Enter book title or author">
+    <button type="submit">Search</button>
+    <button type="button" onclick="window.location.href='/books'">Show All Books</button>
+  </form>
+
+  <!-- 新增书籍按钮 -->
+  <button onclick="showAddBookForm()">Add New Book</button>
+
+  <!-- 新增书籍表单（默认隐藏） -->
+  <div id="addBookForm" style="display: none;">
+    <h3>Add New Book</h3>
+    <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
+      <label for="newTitle">Title:</label>
+      <input type="text" id="newTitle" name="title" required><br>
+
+      <label for="newAuthor">Author:</label>
+      <input type="text" id="newAuthor" name="author" required><br>
+
+      <label for="newIsbn">ISBN:</label>
+      <input type="text" id="newIsbn" name="isbn" required><br>
+
+      <button type="submit">Confirm</button>
+      <button type="button" onclick="hideAddBookForm()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- 书籍列表展示 -->
+  <ul>
+    <% books.forEach(book => { %>
+      <li>
+        <strong>Title:</strong> <%= book.title %> |
+        <strong>Author:</strong> <%= book.author %> |
+        <strong>ISBN:</strong> <%= book.isbn %> |
+        <strong>Available:</strong> <%= book.available ? 'Yes' : 'No' %>
+        
+        <!-- 修改按钮 -->
+        <button onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>')">Edit</button>
+
+        <!-- 借阅按钮 -->
+        <% if (book.available) { %>
+          <button onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
+        <% } else { %>
+          <button disabled>Borrowed</button>
+        <% } %>
+
+        <!-- 删除按钮 -->
+        <button onclick="confirmDelete('<%= book._id %>')">Delete</button>
+      </li>
+    <% }) %>
+  </ul>
+
+  <!-- 编辑书籍表单（默认隐藏） -->
+  <div id="editBookForm" style="display: none;">
+    <h3>Edit Book</h3>
+    <form id="editForm" method="POST">
+      <input type="hidden" name="_method" value="PUT">
+      
+      <label for="editTitle">Title:</label>
+      <input type="text" id="editTitle" name="title" required><br>
+
+      <label for="editAuthor">Author:</label>
+      <input type="text" id="editAuthor" name="author" required><br>
+
+      <label for="editIsbn">ISBN:</label>
+      <input type="text" id="editIsbn" name="isbn" required><br>
+
+      <label for="editAvailable">Available:</label>
+      <input type="checkbox" id="editAvailable" name="available"><br>
+
+      <button type="submit">Confirm</button>
+      <button type="button" onclick="hideEditBookForm()">Cancel</button>
+    </form>
+  </div>
+
+  <!-- 返回主页按钮 -->
+  <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
+
+  <script>
+    // 显示新增书籍表单
+    function showAddBookForm() {
+      document.getElementById('addBookForm').style.display = 'block';
+    }
+
+    // 隐藏新增书籍表单
+    function hideAddBookForm() {
+      document.getElementById('addBookForm').style.display = 'none';
+    }
+
+    // 显示编辑书籍表单并填充现有数据
+    function showEditBookForm(id, title, author, isbn, available) {
+      document.getElementById('editForm').action = `/api/books/${id}`;
+      document.getElementById('editTitle').value = title;
+      document.getElementById('editAuthor').value = author;
+      document.getElementById('editIsbn').value = isbn;
+      document.getElementById('editAvailable').checked = available;
+      document.getElementById('editBookForm').style.display = 'block';
+    }
+
+    // 隐藏编辑书籍表单
+    function hideEditBookForm() {
+      document.getElementById('editBookForm').style.display = 'none';
+    }
+
+    // 确认借阅
+    function confirmBorrow(id) {
+      if (confirm('Are you sure you want to borrow this book?')) {
+        window.location.href = `/api/borrow/${id}`;
+      }
+    }
+
+    // 确认删除
+    function confirmDelete(id) {
+      if (confirm('Are you sure you want to delete this book?')) {
+        fetch(`/api/books/${id}`, { method: 'DELETE' })
+          .then(() => window.location.reload())
+          .catch(error => console.error('Error:', error));
+      }
+    }
+  </script>
+</body>
+</html>

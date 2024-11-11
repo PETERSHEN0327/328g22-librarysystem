@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Sign Up</h1>
+
+  <!-- 显示错误消息 -->
+  <% if (errorMessage) { %>
+    <p style="color: red;"><%= errorMessage %></p>
+  <% } %>
+
+  <!-- 显示成功消息并跳转到登录页面 -->
+  <% if (successMessage) { %>
+    <p style="color: green;"><%= successMessage %></p>
+    <script>
+      setTimeout(function() {
+        window.location.href = '/login';
+      }, 2000); // 2秒后跳转到登录页面
+    </script>
+  <% } %>
+
+  <form action="/signup" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <button type="submit">Sign Up</button>
+  </form>
+
+  <button onclick="window.location.href='/login'">Return to Login</button>
+</body>
+</html>

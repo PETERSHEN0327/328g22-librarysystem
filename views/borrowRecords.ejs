@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Borrow Records</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>My Borrow Records</h1>
+
+  <!-- 显示借阅记录 -->
+  <ul>
+    <% borrowRecords.forEach(record => { %>
+      <li>
+        <strong>Title:</strong> <%= record.book.title %> |
+        <strong>Borrow Date:</strong> <%= record.borrowDate.toDateString() %> |
+        <strong>Status:</strong> 
+        <% if (record.returnDate) { %>
+          Returned on <%= record.returnDate.toDateString() %>
+        <% } else { %>
+          Not returned
+        <% } %>
+      </li>
+    <% }) %>
+  </ul>
+
+  <!-- 返回主页按钮 -->
+  <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
+</body>
+</html>
