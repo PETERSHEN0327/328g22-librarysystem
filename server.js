@@ -42,8 +42,8 @@ app.get('/', (req, res) => {
 
 // 路由配置
 app.use('/', userRoutes); // 将 userRoutes 挂载到根路径
-app.use('/api/books', bookRoutes);
-app.use('/api/borrow', borrowRoutes);
+app.use('/books', bookRoutes);
+app.use('/borrow', borrowRoutes);
 
 // 启动服务器
 app.listen(PORT, () => {
