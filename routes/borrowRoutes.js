@@ -4,7 +4,7 @@ const Book = require('../models/Book');
 const BorrowRecord = require('../models/BorrowRecord');
 
 // 借阅书籍
-router.get('/borrow/:bookId', async (req, res) => {
+router.post('/:bookId', async (req, res) => {
   if (!req.session.userId) {
     return res.redirect('/login');
   }
@@ -15,6 +15,7 @@ router.get('/borrow/:bookId', async (req, res) => {
       return res.send('Book is not available for borrowing');
     }
 
+    // 创建新的借阅记录
     const borrowRecord = new BorrowRecord({
       userId: req.session.userId,
       bookId: book._id,
@@ -22,17 +23,19 @@ router.get('/borrow/:bookId', async (req, res) => {
     });
     await borrowRecord.save();
 
+    // 更新书籍的可用状态
     book.available = false;
     await book.save();
 
-    res.send('Book borrowed successfully');
+    res.send('Book borrowed successfully'); // 或者重定向到借阅记录页面
   } catch (error) {
+    console.error('Error borrowing book:', error);
     res.status(500).send('Internal Server Error');
   }
 });
 
 // 归还书籍
-router.get('/return/:bookId', async (req, res) => {
+router.post('/return/:bookId', async (req, res) => {
   if (!req.session.userId) {
     return res.redirect('/login');
   }
@@ -43,16 +46,23 @@ router.get('/return/:bookId', async (req, res) => {
       return res.send('Book is not borrowed');
     }
 
-    await BorrowRecord.findOneAndUpdate(
+    // 更新借阅记录的归还日期
+    const borrowRecord = await BorrowRecord.findOneAndUpdate(
       { userId: req.session.userId, bookId: book._id, returnDate: null },
       { returnDate: new Date() }
     );
 
+    if (!borrowRecord) {
+      return res.send('No active borrow record found for this book');
+    }
+
+    // 更新书籍的可用状态
     book.available = true;
     await book.save();
 
-    res.send('Book returned successfully');
+    res.send('Book returned successfully'); // 或者重定向到借阅记录页面
   } catch (error) {
+    console.error('Error returning book:', error);
     res.status(500).send('Internal Server Error');
   }
 });

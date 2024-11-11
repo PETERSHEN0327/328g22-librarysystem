@@ -10,7 +10,7 @@
   <h1>Library Books</h1>
 
   <!-- 搜索表单 -->
-  <form action="/api/books/read" method="POST">
+  <form action="/books/read" method="POST">
     <label for="search">Search by Title or Author:</label>
     <input type="text" id="search" name="search" placeholder="Enter book title or author">
     <button type="submit">Search</button>
@@ -23,7 +23,7 @@
   <!-- 新增书籍表单（默认隐藏） -->
   <div id="addBookForm" style="display: none;">
     <h3>Add New Book</h3>
-    <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
+    <form action="/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
       <label for="newTitle">Title:</label>
       <input type="text" id="newTitle" name="title" required><br>
 
