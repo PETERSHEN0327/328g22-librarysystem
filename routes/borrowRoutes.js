@@ -27,7 +27,8 @@ router.post('/:bookId', async (req, res) => {
     book.available = false;
     await book.save();
 
-    res.send('Book borrowed successfully'); // 或者重定向到借阅记录页面
+// 或者重定向到借阅记录页面
+    res.send('Book borrowed successfully'); 
   } catch (error) {
     console.error('Error borrowing book:', error);
     res.status(500).send('Internal Server Error');
@@ -44,7 +45,7 @@ router.get('/borrowRecords', async (req, res) => {
     // 查找当前用户的借阅记录，并填充书籍信息
     const borrowRecords = await BorrowRecord.find({ userId: req.session.userId }).populate('bookId');
     const successMessage = req.query.message; // 获取查询参数中的消息
-    res.render('borrowRecords', { borrowRecords });
+    res.render('borrowRecords', { borrowRecords, successMessage });
   } catch (error) {
     console.error('Error fetching borrow records:', error);
     res.status(500).send('Internal Server Error');
