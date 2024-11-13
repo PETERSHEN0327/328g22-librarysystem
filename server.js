@@ -4,8 +4,6 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
-
-
 // 路由导入
 const userRoutes = require('./routes/userRoutes');
 const bookRoutes = require('./routes/bookRoutes');
@@ -54,9 +52,4 @@ app.use('/api/borrow', borrowRoutes);
 // 启动服务器
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack); // 在控制台打印错误堆栈信息
-  res.status(500).send('Internal Server Error');
 });

@@ -31,7 +31,7 @@
       <input type="text" id="newAuthor" name="author" required><br>
 
       <label for="newIsbn">ISBN (optional):</label>
-      <input type="text" id="newIsbn" name="isbn" ><br>
+      <input type="text" id="newIsbn" name="isbn"><br>
 
       <button type="submit">Confirm</button>
       <button type="button" onclick="hideAddBookForm()">Cancel</button>
@@ -66,7 +66,7 @@
   <!-- 编辑书籍表单（默认隐藏） -->
   <div id="editBookForm" style="display: none;">
     <h3>Edit Book</h3>
-    <form id="editForm" method="POST" action="/api/books/<%= book._id %>?_method=PUT">
+    <form id="editForm" method="POST">
       <input type="hidden" name="_method" value="PUT">
       
       <label for="editTitle">Title:</label>
@@ -75,8 +75,8 @@
       <label for="editAuthor">Author:</label>
       <input type="text" id="editAuthor" name="author" required><br>
 
-      <label for="editIsbn">ISBN(optional):</label>
-      <input type="text" id="editIsbn" name="isbn" ><br>
+      <label for="editIsbn">ISBN (optional):</label>
+      <input type="text" id="editIsbn" name="isbn"><br>
 
       <label for="editAvailable">Available:</label>
       <input type="checkbox" id="editAvailable" name="available"><br>
@@ -102,7 +102,7 @@
 
     // 显示编辑书籍表单并填充现有数据
     function showEditBookForm(id, title, author, isbn, available) {
-      document.getElementById('editForm').action = `/api/books/${id}`;
+      document.getElementById('editForm').action = `/api/books/${id}?_method=PUT`;
       document.getElementById('editTitle').value = title;
       document.getElementById('editAuthor').value = author;
       document.getElementById('editIsbn').value = isbn;
@@ -117,21 +117,21 @@
 
     // 确认借阅
     function confirmBorrow(id) {
-    if (confirm('Are you sure you want to borrow this book?')) {
-      fetch(`/api/borrow/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert(data); // 提示借阅结果
-        window.location.reload(); // 刷新页面以更新书籍状态
-      })
-      .catch(error => console.error('Error:', error));
+      if (confirm('Are you sure you want to borrow this book?')) {
+        fetch(`/api/borrow/${id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.text())
+        .then(data => {
+          alert(data); // 提示借阅结果
+          window.location.reload(); // 刷新页面以更新书籍状态
+        })
+        .catch(error => console.error('Error:', error));
+      }
     }
-  }
 
     // 确认删除
     function confirmDelete(id) {

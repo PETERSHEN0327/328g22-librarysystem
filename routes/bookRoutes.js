@@ -72,17 +72,4 @@ router.delete('/:id', async (req, res) => {  // 使用 '/:id' 路径
   }
 });
 
-router.get('/', async (req, res) => {
-  try {
-      console.log("Fetching books..."); // 调试信息
-      const books = await Book.find(); // 查询数据库
-      console.log("Books fetched:", books); // 打印获取的数据
-      res.render('books', { books });
-  } catch (error) {
-      console.error('Error fetching books:', error);
-      res.status(500).send('Internal Server Error');
-  }
-});
-
-
 module.exports = router;
