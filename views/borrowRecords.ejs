@@ -13,7 +13,7 @@
   <ul>
     <% borrowRecords.forEach(record => { %>
       <li>
-        <strong>Title:</strong> <%= record.book.title %> |
+        <strong>Title:</strong> <%= record.bookId ? record.bookId.title : 'N/A' %> |
         <strong>Borrow Date:</strong> <%= record.borrowDate.toDateString() %> |
         <strong>Status:</strong> 
         <% if (record.returnDate) { %>
@@ -21,12 +21,12 @@
         <% } else { %>
           Not returned
           <!-- 添加 "Return" 按钮 -->
-          <button onclick="confirmReturn('<%= record.book._id %>')">Return</button>
+          <button onclick="confirmReturn('<%= record.bookId._id %>')">Return</button>
         <% } %>
       </li>
     <% }) %>
   </ul>
-
+  
   <!-- 返回主页按钮 -->
   <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
 
