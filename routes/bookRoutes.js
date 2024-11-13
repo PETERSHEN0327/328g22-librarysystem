@@ -53,7 +53,7 @@ router.post('/create', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { title, author, isbn, available } = req.body;
-    await Book.findByIdAndUpdate(req.params.id, { title, author, isbn, available: available === 'on' });
+    await Book.findByIdAndUpdate(req.params.id, { title, author, isbn: isbn || null, available: available === 'on' });
     res.redirect('/api/books'); // 更新后重定向回书籍列表
   } catch (error) {
     console.error('Error updating book:', error);
