@@ -16,38 +16,34 @@ https://three81g22-librarysystem.onrender.com
 
 Installation and Setup
 Clone the repository:
-bash
-复制代码
-git clone https://github.com/your-username/library-system.git
+git clone https://github.com/PETERSHEN0327/381g22-librarysystem.git
+
 Navigate to the project directory:
-bash
-复制代码
-cd library-system
+cd 381project-group22
+
 Install dependencies:
-bash
-复制代码
 npm install
+
 Configure environment variables:
 In the project root, create a .env file and set up the MongoDB connection URI and server port:
-makefile
-复制代码
-MONGODB_URI=your_mongodb_connection_string
-PORT=4000
-Start the server:
-bash
-复制代码
-npm start
-Features
-Book Search: Allows users to search books by title or author.
-Book Management: Administrators can add, edit, and delete book information.
-Borrow and Return Books: Users can borrow and return books, and the system will update book availability accordingly.
-Usage Guide
-After accessing the homepage, users can choose to log in or register.
-Once logged in, users can browse the book list and use the search function to find specific books.
-Click the "Borrow" button to borrow a book or the "Return" button to return a book.
-Administrators can add new books using the "Add New Book" button or edit book details using the "Edit" button.
-The system will automatically update the book's availability status based on user actions.
+MONGODB_URI=mongodb+srv://admin:Sqw20020327@cluster0.4u5v6.mongodb.net/projectgroup23library?retryWrites=true&w=majority&appName=Cluster0
+PORT=3000
 
+Start the server:
+npm start
+
+Function description
+Book search: Search by title or author name is supported.
+Library management: Administrators can add, edit, and delete book information.
+Book borrowing and returning: Users can borrow and return books, and the system will update the status of the book.
+
+Operation guide
+After visiting the home page, users can choose to log in or register.
+Once logged in, users can browse the list of books in the Library and use the search function to find books.
+Click the "Borrow" button to borrow books.
+The administrator can Add books through the "Add New Book" button and Edit the book information through the "Edit" button.
+The system will automatically update the available status of the book according to user actions.
+Check the book information in My Borrow Records and click the "Return" button to return the book.
 
 
 项目介绍
@@ -66,34 +62,31 @@ https://three81g22-librarysystem.onrender.com
 
 安装与运行
 克隆项目：
-bash
-复制代码
-git clone https://github.com/your-username/library-system.git
+git clone https://github.com/PETERSHEN0327/381g22-librarysystem.git
+
 进入项目目录：
-bash
-复制代码
-cd library-system
+cd 381project-group22
+
 安装依赖：
-bash
-复制代码
 npm install
+
 配置环境变量：
 在项目根目录创建一个 .env 文件，配置 MongoDB 连接 URI 和服务器端口：
-makefile
-复制代码
-MONGODB_URI=your_mongodb_connection_string
-PORT=4000
+MONGODB_URI=mongodb+srv://admin:Sqw20020327@cluster0.4u5v6.mongodb.net/projectgroup23library?retryWrites=true&w=majority&appName=Cluster0
+PORT=3000
+
 启动服务器：
-bash
-复制代码
 npm start
+
 功能说明
 图书搜索：支持按书名或作者名称进行搜索。
 图书管理：管理员可以添加、编辑、删除图书信息。
 图书借阅与归还：用户可以借阅和归还图书，系统会更新图书的状态。
+
 操作指南
 访问首页后，用户可以选择登录或注册。
-登录后，用户可以浏览图书列表，使用搜索功能查找图书。
-点击“Borrow”按钮借阅图书，点击“Return”按钮归还图书。
+登录后，用户可以在Library浏览图书列表，使用搜索功能查找图书。
+点击“Borrow”按钮借阅图书.
 管理员可通过“Add New Book”按钮添加图书，通过“Edit”按钮编辑图书信息。
 系统会自动根据用户操作更新图书的可用状态。
+在My Borrow Records中查看借阅图书信息，点击“Return”按钮归还图书。

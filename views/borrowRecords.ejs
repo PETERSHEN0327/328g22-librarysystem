@@ -7,28 +7,47 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <div class="container">
   <h1>My Borrow Records</h1>
 
   <!-- 显示借阅记录 -->
   <ul>
     <% borrowRecords.forEach(record => { %>
       <li>
-        <strong>Title:</strong> <%= record.bookId.title %> |
+        <strong>Title:</strong> <%= record.book.title %> |
         <strong>Borrow Date:</strong> <%= record.borrowDate.toDateString() %> |
         <strong>Status:</strong> 
         <% if (record.returnDate) { %>
           Returned on <%= record.returnDate.toDateString() %>
         <% } else { %>
           Not returned
+          <!-- 添加 "Return" 按钮 -->
+          <button onclick="confirmReturn('<%= record.book._id %>')">Return</button>
         <% } %>
       </li>
     <% }) %>
   </ul>
-  
 
   <!-- 返回主页按钮 -->
   <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
- </div>
+
+  <script>
+    // 确认归还图书
+    function confirmReturn(bookId) {
+      if (confirm('Are you sure you want to return this book?')) {
+        fetch(`/api/borrow/return/${bookId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(response => response.text())
+        .then(data => {
+          alert(data); // 提示归还结果
+          window.location.reload(); // 刷新页面以更新借阅状态
+        })
+        .catch(error => console.error('Error:', error));
+      }
+    }
+  </script>
 </body>
 </html>
