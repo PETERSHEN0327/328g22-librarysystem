@@ -37,12 +37,12 @@ router.post('/read', async (req, res) => {
 });
 
 // 添加书籍
-router.post('/', async (req, res) => {  // 直接使用 '/' 路径
+router.post('/create', async (req, res) => {
   try {
     const { title, author, isbn } = req.body;
-    const newBook = new Book({ title, author, isbn, available: true });
+    const newBook = new Book({ title, author, isbn: isbn || null, available: true });
     await newBook.save();
-    res.redirect('/books'); // 添加书籍后重定向到书籍列表页面
+    res.redirect('/api/books'); // 添加书籍后重定向到书籍列表页面
   } catch (error) {
     console.error('Error adding book:', error);
     res.status(500).send('Internal Server Error');
