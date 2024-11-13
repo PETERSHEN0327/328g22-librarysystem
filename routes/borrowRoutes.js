@@ -34,6 +34,22 @@ router.post('/:bookId', async (req, res) => {
   }
 });
 
+// 查看借阅记录路由
+router.get('/borrowRecords', async (req, res) => {
+  if (!req.session.userId) {
+    return res.redirect('/login');
+  }
+
+  try {
+    // 查找当前用户的借阅记录，并填充书籍信息
+    const borrowRecords = await BorrowRecord.find({ userId: req.session.userId }).populate('bookId');
+    res.render('borrowRecords', { borrowRecords });
+  } catch (error) {
+    console.error('Error fetching borrow records:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // 归还书籍
 router.post('/return/:bookId', async (req, res) => {
   if (!req.session.userId) {
