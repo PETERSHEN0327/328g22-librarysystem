@@ -50,7 +50,6 @@ router.post('/create', async (req, res) => {
 });
 
 // 更新书籍信息
-// 更新书籍信息
 router.put('/:id', async (req, res) => {
   try {
     const { title, author, isbn, available } = req.body;
