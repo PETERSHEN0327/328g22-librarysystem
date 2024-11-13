@@ -117,10 +117,21 @@
 
     // 确认借阅
     function confirmBorrow(id) {
-      if (confirm('Are you sure you want to borrow this book?')) {
-        window.location.href = `/api/borrow/${id}`;
-      }
+    if (confirm('Are you sure you want to borrow this book?')) {
+      fetch(`/api/borrow/${id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.text())
+      .then(data => {
+        alert(data); // 提示借阅结果
+        window.location.reload(); // 刷新页面以更新书籍状态
+      })
+      .catch(error => console.error('Error:', error));
     }
+  }
 
     // 确认删除
     function confirmDelete(id) {
