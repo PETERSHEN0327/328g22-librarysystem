@@ -76,7 +76,7 @@ router.post('/return/:bookId', async (req, res) => {
     book.available = true;
     await book.save();
 
-    res.send('Book returned successfully'); // 或者重定向到借阅记录页面
+    res.redirect('/api/borrow/borrowRecords'); // 重定向到借阅记录页面
   } catch (error) {
     console.error('Error returning book:', error);
     res.status(500).send('Internal Server Error');
