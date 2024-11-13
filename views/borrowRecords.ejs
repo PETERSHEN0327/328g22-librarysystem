@@ -13,7 +13,7 @@
   <ul>
     <% borrowRecords.forEach(record => { %>
       <li>
-        <strong>Title:</strong> <%= record.book.title %> |
+        <strong>Title:</strong> <%= record.bookId.title %> |
         <strong>Borrow Date:</strong> <%= record.borrowDate.toDateString() %> |
         <strong>Status:</strong> 
         <% if (record.returnDate) { %>
@@ -24,6 +24,7 @@
       </li>
     <% }) %>
   </ul>
+  
 
   <!-- 返回主页按钮 -->
   <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
