@@ -17,6 +17,25 @@ router.get('/', async (req, res) => {  // 直接使用 '/'，因为在 server.js
   }
 });
 
+// 搜索书籍
+router.post('/read', async (req, res) => {
+  const searchQuery = req.body.search;
+  
+  try {
+    // 使用正则表达式来搜索书名或作者，忽略大小写
+    const books = await Book.find({
+      $or: [
+        { title: new RegExp(searchQuery, 'i') },
+        { author: new RegExp(searchQuery, 'i') }
+      ]
+    });
+    res.render('books', { books }); // 渲染 books.ejs 页面并传递搜索结果
+  } catch (error) {
+    console.error('Error searching books:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // 添加书籍
 router.post('/', async (req, res) => {  // 直接使用 '/' 路径
   try {
