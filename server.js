@@ -2,9 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
-
 const methodOverride = require('method-override');
-app.use(methodOverride('_method'));
+
 
 
 // 路由导入
@@ -19,6 +18,9 @@ const PORT = process.env.PORT || 4000; // 使用 Render 的环境变量 PORT 或
 // 设置视图引擎
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+// 配置 method-override 中间件
+app.use(methodOverride('_method'));
 
 // 配置 express-session
 app.use(session({
