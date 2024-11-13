@@ -3,6 +3,10 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
+
+
 // 路由导入
 const userRoutes = require('./routes/userRoutes');
 const bookRoutes = require('./routes/bookRoutes');

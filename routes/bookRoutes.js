@@ -50,11 +50,12 @@ router.post('/create', async (req, res) => {
 });
 
 // 更新书籍信息
-router.put('/:id', async (req, res) => {  // 使用 '/:id' 路径
+// 更新书籍信息
+router.put('/:id', async (req, res) => {
   try {
-    const { title, author, isbn } = req.body;
-    await Book.findByIdAndUpdate(req.params.id, { title, author, isbn });
-    res.send('Book updated successfully');
+    const { title, author, isbn, available } = req.body;
+    await Book.findByIdAndUpdate(req.params.id, { title, author, isbn, available: available === 'on' });
+    res.redirect('/api/books'); // 更新后重定向回书籍列表
   } catch (error) {
     console.error('Error updating book:', error);
     res.status(500).send('Internal Server Error');
