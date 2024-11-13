@@ -55,3 +55,8 @@ app.use('/api/borrow', borrowRoutes);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack); // 在控制台打印错误堆栈信息
+  res.status(500).send('Internal Server Error');
+});
