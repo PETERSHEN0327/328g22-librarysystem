@@ -8,30 +8,30 @@
 </head>
 <body>
   <div class="container">
-  <h1>Login</h1>
+    <h1>Login</h1>
 
-  <!-- 显示成功消息 -->
-  <% if (successMessage) { %>
-    <p style="color: green;"><%= successMessage %></p>
-  <% } %>
+    <!-- 显示成功消息 -->
+    <% if (successMessage) { %>
+      <p class="success-message"><%= successMessage %></p>
+    <% } %>
 
-  <!-- 显示错误消息 -->
-  <% if (errorMessage) { %>
-    <p style="color: red;"><%= errorMessage %></p>
-  <% } %>
+    <!-- 显示错误消息 -->
+    <% if (errorMessage) { %>
+      <p class="error-message"><%= errorMessage %></p>
+    <% } %>
 
-  <form action="/login" method="POST">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required><br>
+    <form class="login-form" action="/login" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Enter your username" required><br>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
 
-    <button type="submit">Login</button>
-  </form>
+      <button type="submit" class="login-button">Login</button>
+    </form>
 
-  <p>Don't have an account?</p>
-  <button onclick="window.location.href='/signup'">Register</button>
- </div>
+    <p>Don't have an account?</p>
+    <button class="register-button" onclick="window.location.href='/signup'">Register</button>
+  </div>
 </body>
 </html>
