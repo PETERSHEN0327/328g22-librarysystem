@@ -19,9 +19,8 @@ body, .centered {
 
 /* 页面容器 */
 .container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 400px; /* 限制宽度 */
   padding: 20px;
   background: #ffffff;
   border-radius: 8px;
