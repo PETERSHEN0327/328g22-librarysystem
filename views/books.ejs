@@ -42,7 +42,7 @@
             <td><%= book.available ? 'Yes' : 'No' %></td>
             <td>
               <div class="button-group">
-                <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
+                <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>')">Edit</button>
                 <% if (book.available) { %>
                   <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
                 <% } else { %>
