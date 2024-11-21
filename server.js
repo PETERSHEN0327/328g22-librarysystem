@@ -31,6 +31,9 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 配置静态文件目录
+app.use(express.static('public'));
+
 // 连接到 MongoDB 数据库
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
