@@ -6,7 +6,7 @@
   <title>Library Books</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="centered">
+<body>
   <div class="container">
     <h1>Library Books</h1>
 
@@ -43,33 +43,39 @@
       </form>
     </div>
 
-    <!-- 书籍列表展示 -->
-    <ul class="book-list">
-      <% books.forEach(book => { %>
-        <li class="book-item">
-          <div>
-            <strong>Title:</strong> <%= book.title %> |
-            <strong>Author:</strong> <%= book.author %> |
-            <strong>ISBN:</strong> <%= book.isbn %> |
-            <strong>Available:</strong> <%= book.available ? 'Yes' : 'No' %>
-          </div>
-          <div class="button-group">
-            <!-- 修改按钮 -->
-            <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
-
-            <!-- 借阅按钮 -->
-            <% if (book.available) { %>
-              <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
-            <% } else { %>
-              <button class="btn btn-disabled" disabled>Borrowed</button>
-            <% } %>
-
-            <!-- 删除按钮 -->
-            <button class="btn btn-danger" onclick="confirmDelete('<%= book._id %>')">Delete</button>
-          </div>
-        </li>
-      <% }) %>
-    </ul>
+    <!-- 书籍表格展示 -->
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>ISBN</th>
+          <th>Available</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% books.forEach(book => { %>
+          <tr>
+            <td><%= book.title %></td>
+            <td><%= book.author %></td>
+            <td><%= book.isbn %></td>
+            <td><%= book.available ? 'Yes' : 'No' %></td>
+            <td>
+              <div class="button-group">
+                <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>',)">Edit</button>
+                <% if (book.available) { %>
+                  <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
+                <% } else { %>
+                  <button class="btn btn-disabled" disabled>Borrowed</button>
+                <% } %>
+                <button class="btn btn-danger" onclick="confirmDelete('<%= book._id %>')">Delete</button>
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
 
     <!-- 编辑书籍表单（默认隐藏） -->
     <div id="editBookForm" class="form-container" style="display: none;">
@@ -101,17 +107,14 @@
   </div>
 
   <script>
-    // 显示新增书籍表单
     function showAddBookForm() {
       document.getElementById('addBookForm').style.display = 'block';
     }
 
-    // 隐藏新增书籍表单
     function hideAddBookForm() {
       document.getElementById('addBookForm').style.display = 'none';
     }
 
-    // 显示编辑书籍表单并填充现有数据
     function showEditBookForm(id, title, author, isbn, available) {
       document.getElementById('editForm').action = `/api/books/${id}?_method=PUT`;
       document.getElementById('editTitle').value = title;
@@ -121,12 +124,10 @@
       document.getElementById('editBookForm').style.display = 'block';
     }
 
-    // 隐藏编辑书籍表单
     function hideEditBookForm() {
       document.getElementById('editBookForm').style.display = 'none';
     }
 
-    // 确认借阅
     function confirmBorrow(id) {
       if (confirm('Are you sure you want to borrow this book?')) {
         fetch(`/api/borrow/${id}`, {
@@ -137,14 +138,13 @@
         })
         .then(response => response.text())
         .then(data => {
-          alert(data); // 提示借阅结果
-          window.location.reload(); // 刷新页面以更新书籍状态
+          alert(data);
+          window.location.reload();
         })
         .catch(error => console.error('Error:', error));
       }
     }
 
-    // 确认删除
     function confirmDelete(id) {
       if (confirm('Are you sure you want to delete this book?')) {
         fetch(`/api/books/${id}`, { method: 'DELETE' })

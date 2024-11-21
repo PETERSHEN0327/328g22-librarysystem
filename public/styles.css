@@ -1,12 +1,10 @@
 /* 全局样式 */
-html, body {
+body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
   color: #333;
-  height: 100%;
-  width: 100%;
 }
 
 /* 完全居中样式 */
@@ -18,138 +16,158 @@ body.centered {
   min-height: 100vh;
   margin: 0;
   width: 100%;
+  height: 100%;
   background-color: #f9f9f9;
 }
 
 /* 页面容器 */
 .container {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px; /* 最大宽度更大以适应大屏显示 */
+  margin: 20px auto;
   padding: 20px;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 /* 标题样式 */
 h1, h2 {
+  text-align: center;
   color: #4CAF50;
   margin-bottom: 20px;
   font-size: 28px;
   font-weight: bold;
 }
 
-/* 表单样式 */
-form {
-  width: 100%;
+/* 搜索表单样式 */
+.form-container {
+  margin-bottom: 20px;
   padding: 20px;
-  background: #f0f0f0;
-  border-radius: 10px;
+  background: #f8f8f8;
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-form label {
+.form-container label {
   display: block;
-  text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
   color: #333;
 }
 
-form input[type="text"],
-form input[type="password"] {
+.form-container input[type="text"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  box-sizing: border-box;
   font-size: 14px;
   transition: border-color 0.3s ease;
 }
 
-form input[type="text"]:focus,
-form input[type="password"]:focus {
+.form-container input[type="text"]:focus {
   border-color: #4CAF50;
   outline: none;
 }
 
-form button {
-  width: 100%;
+.form-container .button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* 按钮间隔 */
+}
+
+.form-container button {
+  flex: 1;
   padding: 12px;
-  font-size: 16px;
   background-color: #4CAF50;
   border: none;
   border-radius: 5px;
   color: #fff;
+  font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-form button:hover {
+.form-container button:hover {
   background-color: #45a049;
 }
 
-/* 提示消息样式 */
-.success-message {
-  color: #28a745;
-  font-weight: bold;
-  margin-bottom: 15px;
+/* 表格样式 */
+.book-table {
+  width: 100%; /* 撑满页面宽度 */
+  border-collapse: collapse; /* 去除表格内边距 */
+  margin-top: 20px;
 }
 
-.error-message {
-  color: #dc3545;
-  font-weight: bold;
-  margin-bottom: 15px;
+.book-table thead {
+  background-color: #4CAF50;
+  color: #fff;
 }
 
-/* 列表样式 */
-ul {
-  list-style: none;
-  padding: 0;
+.book-table th, 
+.book-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd; /* 表格边框 */
 }
 
-li {
-  padding: 15px;
-  background: #f8f8f8;
-  margin: 10px 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.book-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.book-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.book-table td .button-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  gap: 8px; /* 按钮间隔 */
 }
 
-li strong {
-  color: #333;
-}
-
-li button {
+.book-table .btn {
   padding: 8px 12px;
-  margin-left: 5px;
   border: none;
   border-radius: 4px;
-  background-color: #4CAF50;
-  color: white;
+  font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-li button:hover {
+.book-table .btn-primary {
+  background-color: #007BFF;
+  color: #fff;
+}
+
+.book-table .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.book-table .btn-success {
+  background-color: #4CAF50;
+  color: #fff;
+}
+
+.book-table .btn-success:hover {
   background-color: #45a049;
 }
 
-li button:disabled {
+.book-table .btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.book-table .btn-danger:hover {
+  background-color: #b52a35;
+}
+
+.book-table .btn-disabled {
   background-color: #ccc;
+  color: #666;
   cursor: not-allowed;
 }
 
-/* 按钮样式 */
+/* 按钮通用样式 */
 button {
   background-color: #4CAF50;
   color: white;
@@ -170,33 +188,12 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* 注册按钮 */
-.register-button {
-  margin-top: 10px;
-  background-color: #007BFF;
-}
-
-.register-button:hover {
-  background-color: #0056b3;
-}
-
-/* 表单返回按钮样式 */
+/* 返回按钮样式 */
 .return-btn {
   margin-top: 20px;
-  padding: 10px;
   background-color: #007BFF;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  font-size: 16px;
 }
 
 .return-btn:hover {
   background-color: #0056b3;
-}
-
-/* 调整按钮组的间距 */
-.button-group {
-  display: flex;
-  gap: 10px; /* 按钮之间的间隙 */
 }
