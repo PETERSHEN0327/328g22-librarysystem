@@ -7,50 +7,56 @@ body {
   color: #333;
 }
 
-/* 居中对齐 */
+/* 完全居中样式 */
 body.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
   width: 100%;
   height: 100%;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-height: 100vh !important;
+  background-color: #f9f9f9;
 }
-
 
 /* 页面容器 */
 .container {
   width: 100%;
   max-width: 400px; /* 限制宽度 */
+  margin: 0 auto;
   padding: 20px;
   background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center; /* 容器内的文字居中 */
 }
 
 /* 标题样式 */
 h1, h2 {
-  text-align: center;
   color: #4CAF50;
   margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 1.5;
 }
 
 /* 表单样式 */
 form {
-  margin: 20px auto;
   width: 100%;
   max-width: 400px;
-  background: #f0f0f0;
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 form label {
   display: block;
+  text-align: left;
   margin-bottom: 8px;
   font-weight: bold;
+  color: #333;
 }
 
 form input[type="text"], 
@@ -61,22 +67,43 @@ form input[type="password"] {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus, 
+form input[type="password"]:focus {
+  border-color: #4CAF50;
+  outline: none;
 }
 
 form button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
+  font-size: 16px;
   background-color: #4CAF50;
   border: none;
-  color: #fff;
-  font-size: 16px;
   border-radius: 5px;
+  color: #fff;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 form button:hover {
   background-color: #45a049;
+}
+
+/* 提示消息样式 */
+.success-message {
+  color: #28a745;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: #dc3545;
+  font-weight: bold;
+  margin-bottom: 15px;
 }
 
 /* 列表样式 */
@@ -108,7 +135,7 @@ li button {
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 li button:hover {
@@ -129,6 +156,7 @@ button {
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -140,13 +168,14 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* 居中对齐 */
-.centered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+/* 注册按钮 */
+.register-button {
+  margin-top: 10px;
+  background-color: #007BFF;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
 }
 
 /* 表单返回按钮样式 */
