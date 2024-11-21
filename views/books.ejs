@@ -14,33 +14,10 @@
     <div class="form-container">
       <form action="/api/books/read" method="POST">
         <label for="search">Search by Title or Author:</label>
-        <input type="text" id="search" name="search" placeholder="Enter book title or author">
+        <input type="text" id="search" name="search" placeholder="Enter book title or author" required>
         <div class="button-group">
-          <button type="submit">Search</button>
-          <button type="button" onclick="window.location.href='/api/books'">Show All Books</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- 新增书籍按钮 -->
-    <button class="add-book-btn" onclick="showAddBookForm()">Add New Book</button>
-
-    <!-- 新增书籍表单 -->
-    <div id="addBookForm" class="form-container" style="display: none;">
-      <h3>Add New Book</h3>
-      <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
-        <label for="newTitle">Title:</label>
-        <input type="text" id="newTitle" name="title" required>
-
-        <label for="newAuthor">Author:</label>
-        <input type="text" id="newAuthor" name="author" required>
-
-        <label for="newIsbn">ISBN (optional):</label>
-        <input type="text" id="newIsbn" name="isbn">
-
-        <div class="button-group">
-          <button type="submit">Confirm</button>
-          <button type="button" onclick="hideAddBookForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Search</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='/api/books'">Show All Books</button>
         </div>
       </form>
     </div>
@@ -65,13 +42,13 @@
             <td><%= book.available ? 'Yes' : 'No' %></td>
             <td>
               <div class="button-group">
-                <button onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
+                <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
                 <% if (book.available) { %>
-                  <button onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
+                  <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
                 <% } else { %>
-                  <button disabled>Borrowed</button>
+                  <button class="btn btn-disabled" disabled>Borrowed</button>
                 <% } %>
-                <button onclick="confirmDelete('<%= book._id %>')">Delete</button>
+                <button class="btn btn-danger" onclick="confirmDelete('<%= book._id %>')">Delete</button>
               </div>
             </td>
           </tr>
@@ -79,8 +56,31 @@
       </tbody>
     </table>
 
+    <!-- 新增书籍按钮 -->
+    <button class="btn btn-success" onclick="showAddBookForm()">Add New Book</button>
+
+    <!-- 新增书籍表单 -->
+    <div id="addBookForm" class="form-container" style="display: none;">
+      <h3>Add New Book</h3>
+      <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
+        <label for="newTitle">Title:</label>
+        <input type="text" id="newTitle" name="title" required>
+
+        <label for="newAuthor">Author:</label>
+        <input type="text" id="newAuthor" name="author" required>
+
+        <label for="newIsbn">ISBN (optional):</label>
+        <input type="text" id="newIsbn" name="isbn">
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+          <button type="button" class="btn btn-secondary" onclick="hideAddBookForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
     <!-- 返回主页按钮 -->
-    <button class="return-btn" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
+    <button class="btn btn-secondary return-btn" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
   </div>
 
   <script>
