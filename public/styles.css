@@ -23,12 +23,15 @@ body.centered {
 /* 页面容器 */
 .container {
   width: 90%;
-  max-width: 1200px; /* 最大宽度更大以适应大屏显示 */
+  max-width: 800px; /* 调整为中等屏幕的宽度 */
   margin: 20px auto;
   padding: 20px;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* 标题样式 */
@@ -42,11 +45,13 @@ h1, h2 {
 
 /* 搜索表单样式 */
 .form-container {
+  width: 100%; /* 撑满容器宽度 */
   margin-bottom: 20px;
   padding: 20px;
   background: #f8f8f8;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center; /* 居中表单内容 */
 }
 
 .form-container label {
@@ -57,7 +62,7 @@ h1, h2 {
 }
 
 .form-container input[type="text"] {
-  width: 100%;
+  width: 90%; /* 输入框的宽度 */
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -78,7 +83,7 @@ h1, h2 {
 }
 
 .form-container button {
-  flex: 1;
+  flex: 1; /* 均分按钮宽度 */
   padding: 12px;
   background-color: #4CAF50;
   border: none;
@@ -196,4 +201,24 @@ button:disabled {
 
 .return-btn:hover {
   background-color: #0056b3;
+}
+
+/* 响应式支持 */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+
+  .form-container input[type="text"] {
+    width: 100%;
+  }
+
+  .form-container .button-group {
+    flex-direction: column;
+    gap: 15px; /* 增加按钮间隔 */
+  }
+
+  .book-table {
+    font-size: 12px;
+  }
 }

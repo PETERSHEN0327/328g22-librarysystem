@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,12 +20,17 @@
       <p class="error-message"><%= errorMessage %></p>
     <% } %>
 
+    <!-- 登录表单 -->
     <form class="login-form" action="/login" method="POST">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" placeholder="Enter your username" required><br>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required>
+      </div>
 
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" placeholder="Enter your password" required><br>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+      </div>
 
       <button type="submit" class="login-button">Login</button>
     </form>
