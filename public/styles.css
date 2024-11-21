@@ -1,10 +1,12 @@
 /* 全局样式 */
-body {
+html, body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f9f9f9;
   color: #333;
+  height: 100%;
+  width: 100%;
 }
 
 /* 完全居中样式 */
@@ -16,35 +18,35 @@ body.centered {
   min-height: 100vh;
   margin: 0;
   width: 100%;
-  height: 100%;
   background-color: #f9f9f9;
 }
 
 /* 页面容器 */
 .container {
   width: 100%;
-  max-width: 400px; /* 限制宽度 */
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  text-align: center; /* 容器内的文字居中 */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* 标题样式 */
 h1, h2 {
   color: #4CAF50;
   margin-bottom: 20px;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
-  line-height: 1.5;
 }
 
 /* 表单样式 */
 form {
   width: 100%;
-  max-width: 400px;
   padding: 20px;
   background: #f0f0f0;
   border-radius: 10px;
@@ -59,7 +61,7 @@ form label {
   color: #333;
 }
 
-form input[type="text"], 
+form input[type="text"],
 form input[type="password"] {
   width: 100%;
   padding: 10px;
@@ -71,7 +73,7 @@ form input[type="password"] {
   transition: border-color 0.3s ease;
 }
 
-form input[type="text"]:focus, 
+form input[type="text"]:focus,
 form input[type="password"]:focus {
   border-color: #4CAF50;
   outline: none;
@@ -191,4 +193,10 @@ button:disabled {
 
 .return-btn:hover {
   background-color: #0056b3;
+}
+
+/* 调整按钮组的间距 */
+.button-group {
+  display: flex;
+  gap: 10px; /* 按钮之间的间隙 */
 }

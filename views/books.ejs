@@ -6,90 +6,99 @@
   <title>Library Books</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="centered">
   <div class="container">
-  <h1>Library Books</h1>
+    <h1>Library Books</h1>
 
-  <!-- 搜索表单 -->
-  <form action="/api/books/read" method="POST">
-    <label for="search">Search by Title or Author:</label>
-    <input type="text" id="search" name="search" placeholder="Enter book title or author">
-    <button type="submit">Search</button>
-    <button type="button" onclick="window.location.href='/api/books'">Show All Books</button>
-  </form>
-
-  <!-- 新增书籍按钮 -->
-  <button onclick="showAddBookForm()">Add New Book</button>
-
-  <!-- 新增书籍表单（默认隐藏） -->
-  <div id="addBookForm" style="display: none;">
-    <h3>Add New Book</h3>
-    <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
-      <label for="newTitle">Title:</label>
-      <input type="text" id="newTitle" name="title" required><br>
-
-      <label for="newAuthor">Author:</label>
-      <input type="text" id="newAuthor" name="author" required><br>
-
-      <label for="newIsbn">ISBN (optional):</label>
-      <input type="text" id="newIsbn" name="isbn"><br>
-
-      <button type="submit">Confirm</button>
-      <button type="button" onclick="hideAddBookForm()">Cancel</button>
+    <!-- 搜索表单 -->
+    <form action="/api/books/read" method="POST" class="form-container">
+      <label for="search">Search by Title or Author:</label>
+      <input type="text" id="search" name="search" placeholder="Enter book title or author" required>
+      <div class="button-group">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/api/books'">Show All Books</button>
+      </div>
     </form>
+
+    <!-- 新增书籍按钮 -->
+    <button class="btn btn-success" onclick="showAddBookForm()">Add New Book</button>
+
+    <!-- 新增书籍表单（默认隐藏） -->
+    <div id="addBookForm" class="form-container" style="display: none;">
+      <h3>Add New Book</h3>
+      <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
+        <label for="newTitle">Title:</label>
+        <input type="text" id="newTitle" name="title" required>
+
+        <label for="newAuthor">Author:</label>
+        <input type="text" id="newAuthor" name="author" required>
+
+        <label for="newIsbn">ISBN (optional):</label>
+        <input type="text" id="newIsbn" name="isbn">
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+          <button type="button" class="btn btn-secondary" onclick="hideAddBookForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 书籍列表展示 -->
+    <ul class="book-list">
+      <% books.forEach(book => { %>
+        <li class="book-item">
+          <div>
+            <strong>Title:</strong> <%= book.title %> |
+            <strong>Author:</strong> <%= book.author %> |
+            <strong>ISBN:</strong> <%= book.isbn %> |
+            <strong>Available:</strong> <%= book.available ? 'Yes' : 'No' %>
+          </div>
+          <div class="button-group">
+            <!-- 修改按钮 -->
+            <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
+
+            <!-- 借阅按钮 -->
+            <% if (book.available) { %>
+              <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
+            <% } else { %>
+              <button class="btn btn-disabled" disabled>Borrowed</button>
+            <% } %>
+
+            <!-- 删除按钮 -->
+            <button class="btn btn-danger" onclick="confirmDelete('<%= book._id %>')">Delete</button>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+
+    <!-- 编辑书籍表单（默认隐藏） -->
+    <div id="editBookForm" class="form-container" style="display: none;">
+      <h3>Edit Book</h3>
+      <form id="editForm" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="editTitle">Title:</label>
+        <input type="text" id="editTitle" name="title" required>
+
+        <label for="editAuthor">Author:</label>
+        <input type="text" id="editAuthor" name="author" required>
+
+        <label for="editIsbn">ISBN (optional):</label>
+        <input type="text" id="editIsbn" name="isbn">
+
+        <label for="editAvailable">Available:</label>
+        <input type="checkbox" id="editAvailable" name="available">
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+          <button type="button" class="btn btn-secondary" onclick="hideEditBookForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 返回主页按钮 -->
+    <button class="btn btn-secondary" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
   </div>
-
-  <!-- 书籍列表展示 -->
-  <ul>
-    <% books.forEach(book => { %>
-      <li>
-        <strong>Title:</strong> <%= book.title %> |
-        <strong>Author:</strong> <%= book.author %> |
-        <strong>ISBN:</strong> <%= book.isbn %> |
-        <strong>Available:</strong> <%= book.available ? 'Yes' : 'No' %>
-        
-        <!-- 修改按钮 -->
-        <button onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>')">Edit</button>
-
-        <!-- 借阅按钮 -->
-        <% if (book.available) { %>
-          <button onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
-        <% } else { %>
-          <button disabled>Borrowed</button>
-        <% } %>
-
-        <!-- 删除按钮 -->
-        <button onclick="confirmDelete('<%= book._id %>')">Delete</button>
-      </li>
-    <% }) %>
-  </ul>
-
-  <!-- 编辑书籍表单（默认隐藏） -->
-  <div id="editBookForm" style="display: none;">
-    <h3>Edit Book</h3>
-    <form id="editForm" method="POST">
-      <input type="hidden" name="_method" value="PUT">
-      
-      <label for="editTitle">Title:</label>
-      <input type="text" id="editTitle" name="title" required><br>
-
-      <label for="editAuthor">Author:</label>
-      <input type="text" id="editAuthor" name="author" required><br>
-
-      <label for="editIsbn">ISBN (optional):</label>
-      <input type="text" id="editIsbn" name="isbn"><br>
-
-      <label for="editAvailable">Available:</label>
-      <input type="checkbox" id="editAvailable" name="available"><br>
-
-      <button type="submit">Confirm</button>
-      <button type="button" onclick="hideEditBookForm()">Cancel</button>
-    </form>
-  </div>
-
-  <!-- 返回主页按钮 -->
-  <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
-</div>
 
   <script>
     // 显示新增书籍表单
