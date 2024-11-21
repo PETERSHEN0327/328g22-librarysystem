@@ -8,34 +8,48 @@
 </head>
 <body>
   <div class="container">
-  <h1>My Borrow Records</h1>
+    <h1>My Borrow Records</h1>
   
     <!-- 显示成功消息 -->
     <% if (successMessage) { %>
-      <p style="color: green;"><%= successMessage %></p>
+      <p class="success-message"><%= successMessage %></p>
     <% } %>
 
-  <!-- 显示借阅记录 -->
-  <ul>
-    <% borrowRecords.forEach(record => { %>
-      <li>
-        <strong>Title:</strong> <%= record.bookId ? record.bookId.title : 'N/A' %> |
-        <strong>Borrow Date:</strong> <%= record.borrowDate.toDateString() %> |
-        <strong>Status:</strong> 
-        <% if (record.returnDate) { %>
-          Returned on <%= record.returnDate.toDateString() %>
-        <% } else { %>
-          Not returned
-          <!-- 添加 "Return" 按钮 -->
-          <button onclick="confirmReturn('<%= record.bookId._id %>')">Return</button>
-        <% } %>
-      </li>
-    <% }) %>
-  </ul>
-  
-  <!-- 返回主页按钮 -->
-  <button onclick="window.location.href='/dashboard'">Return to Dashboard</button>
-</div>
+    <!-- 借阅记录表格 -->
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Borrow Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% borrowRecords.forEach(record => { %>
+          <tr>
+            <td><%= record.bookId ? record.bookId.title : 'N/A' %></td>
+            <td><%= record.borrowDate.toDateString() %></td>
+            <td>
+              <% if (record.returnDate) { %>
+                Returned on <%= record.returnDate.toDateString() %>
+              <% } else { %>
+                Not returned
+              <% } %>
+            </td>
+            <td>
+              <% if (!record.returnDate) { %>
+                <button class="btn btn-success" onclick="confirmReturn('<%= record.bookId._id %>')">Return</button>
+              <% } %>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    
+    <!-- 返回主页按钮 -->
+    <button class="btn btn-secondary return-btn" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
+  </div>
 
   <script>
     // 确认归还图书
