@@ -6,24 +6,26 @@
   <title>Library Books</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="centered">
   <div class="container">
     <h1>Library Books</h1>
 
     <!-- 搜索表单 -->
-    <form action="/api/books/read" method="POST" class="form-container">
-      <label for="search">Search by Title or Author:</label>
-      <input type="text" id="search" name="search" placeholder="Enter book title or author" required>
-      <div class="button-group">
-        <button type="submit" class="btn btn-primary">Search</button>
-        <button type="button" class="btn btn-secondary" onclick="window.location.href='/api/books'">Show All Books</button>
-      </div>
-    </form>
+    <div class="form-container">
+      <form action="/api/books/read" method="POST">
+        <label for="search">Search by Title or Author:</label>
+        <input type="text" id="search" name="search" placeholder="Enter book title or author">
+        <div class="button-group">
+          <button type="submit">Search</button>
+          <button type="button" onclick="window.location.href='/api/books'">Show All Books</button>
+        </div>
+      </form>
+    </div>
 
     <!-- 新增书籍按钮 -->
-    <button class="btn btn-success" onclick="showAddBookForm()">Add New Book</button>
+    <button class="add-book-btn" onclick="showAddBookForm()">Add New Book</button>
 
-    <!-- 新增书籍表单（默认隐藏） -->
+    <!-- 新增书籍表单 -->
     <div id="addBookForm" class="form-container" style="display: none;">
       <h3>Add New Book</h3>
       <form action="/api/books/create" method="POST" onsubmit="return confirm('Are you sure you want to add this book?');">
@@ -37,13 +39,13 @@
         <input type="text" id="newIsbn" name="isbn">
 
         <div class="button-group">
-          <button type="submit" class="btn btn-primary">Confirm</button>
-          <button type="button" class="btn btn-secondary" onclick="hideAddBookForm()">Cancel</button>
+          <button type="submit">Confirm</button>
+          <button type="button" onclick="hideAddBookForm()">Cancel</button>
         </div>
       </form>
     </div>
 
-    <!-- 书籍表格展示 -->
+    <!-- 表格展示书籍列表 -->
     <table class="book-table">
       <thead>
         <tr>
@@ -59,17 +61,17 @@
           <tr>
             <td><%= book.title %></td>
             <td><%= book.author %></td>
-            <td><%= book.isbn %></td>
+            <td><%= book.isbn || 'N/A' %></td>
             <td><%= book.available ? 'Yes' : 'No' %></td>
             <td>
               <div class="button-group">
-                <button class="btn btn-primary" onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>',)">Edit</button>
+                <button onclick="showEditBookForm('<%= book._id %>', '<%= book.title %>', '<%= book.author %>', '<%= book.isbn %>', )">Edit</button>
                 <% if (book.available) { %>
-                  <button class="btn btn-success" onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
+                  <button onclick="confirmBorrow('<%= book._id %>')">Borrow</button>
                 <% } else { %>
-                  <button class="btn btn-disabled" disabled>Borrowed</button>
+                  <button disabled>Borrowed</button>
                 <% } %>
-                <button class="btn btn-danger" onclick="confirmDelete('<%= book._id %>')">Delete</button>
+                <button onclick="confirmDelete('<%= book._id %>')">Delete</button>
               </div>
             </td>
           </tr>
@@ -77,33 +79,8 @@
       </tbody>
     </table>
 
-    <!-- 编辑书籍表单（默认隐藏） -->
-    <div id="editBookForm" class="form-container" style="display: none;">
-      <h3>Edit Book</h3>
-      <form id="editForm" method="POST">
-        <input type="hidden" name="_method" value="PUT">
-
-        <label for="editTitle">Title:</label>
-        <input type="text" id="editTitle" name="title" required>
-
-        <label for="editAuthor">Author:</label>
-        <input type="text" id="editAuthor" name="author" required>
-
-        <label for="editIsbn">ISBN (optional):</label>
-        <input type="text" id="editIsbn" name="isbn">
-
-        <label for="editAvailable">Available:</label>
-        <input type="checkbox" id="editAvailable" name="available">
-
-        <div class="button-group">
-          <button type="submit" class="btn btn-primary">Confirm</button>
-          <button type="button" class="btn btn-secondary" onclick="hideEditBookForm()">Cancel</button>
-        </div>
-      </form>
-    </div>
-
     <!-- 返回主页按钮 -->
-    <button class="btn btn-secondary" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
+    <button class="return-btn" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
   </div>
 
   <script>
@@ -119,29 +96,20 @@
       document.getElementById('editForm').action = `/api/books/${id}?_method=PUT`;
       document.getElementById('editTitle').value = title;
       document.getElementById('editAuthor').value = author;
-      document.getElementById('editIsbn').value = isbn;
+      document.getElementById('editIsbn').value = isbn || '';
       document.getElementById('editAvailable').checked = available;
       document.getElementById('editBookForm').style.display = 'block';
     }
 
-    function hideEditBookForm() {
-      document.getElementById('editBookForm').style.display = 'none';
-    }
-
     function confirmBorrow(id) {
       if (confirm('Are you sure you want to borrow this book?')) {
-        fetch(`/api/borrow/${id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        .then(response => response.text())
-        .then(data => {
-          alert(data);
-          window.location.reload();
-        })
-        .catch(error => console.error('Error:', error));
+        fetch(`/api/borrow/${id}`, { method: 'POST' })
+          .then(response => response.text())
+          .then(data => {
+            alert(data);
+            window.location.reload();
+          })
+          .catch(error => console.error('Error:', error));
       }
     }
 
