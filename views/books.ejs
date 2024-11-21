@@ -79,6 +79,31 @@
       </form>
     </div>
 
+    <!-- 编辑书籍表单（默认隐藏） -->
+    <div id="editBookForm" class="form-container" style="display: none;">
+      <h3>Edit Book</h3>
+      <form id="editForm" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="editTitle">Title:</label>
+        <input type="text" id="editTitle" name="title" required>
+
+        <label for="editAuthor">Author:</label>
+        <input type="text" id="editAuthor" name="author" required>
+
+        <label for="editIsbn">ISBN (optional):</label>
+        <input type="text" id="editIsbn" name="isbn">
+
+        <label for="editAvailable">Available:</label>
+        <input type="checkbox" id="editAvailable" name="available">
+
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+          <button type="button" class="btn btn-secondary" onclick="hideEditBookForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+
     <!-- 返回主页按钮 -->
     <button class="btn btn-secondary return-btn" onclick="window.location.href='/dashboard'">Return to Dashboard</button>
   </div>
@@ -93,12 +118,17 @@
     }
 
     function showEditBookForm(id, title, author, isbn, available) {
-      document.getElementById('editForm').action = `/api/books/${id}?_method=PUT`;
+      const form = document.getElementById('editForm');
+      form.action = `/api/books/${id}?_method=PUT`;
       document.getElementById('editTitle').value = title;
       document.getElementById('editAuthor').value = author;
       document.getElementById('editIsbn').value = isbn || '';
       document.getElementById('editAvailable').checked = available;
       document.getElementById('editBookForm').style.display = 'block';
+    }
+
+    function hideEditBookForm() {
+      document.getElementById('editBookForm').style.display = 'none';
     }
 
     function confirmBorrow(id) {
