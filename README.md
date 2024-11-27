@@ -7,9 +7,9 @@ Group Number / 组号:  Group 22
 
 Members / 成员:
 Name: SHEN Qiwen, SID: 13673791
-Name: Lau Tak Hing, SID: 13694497
 Name: ZHOU Chenyu, SID: 13520854
 Name: Wang Yan Qian, SID: 13694589
+Name: Lau Tak Hing, SID: 13694497
 Name: Chan Chung Kit, SID: 
 
 Project File Intro / 项目文件介绍
